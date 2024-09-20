@@ -1,7 +1,7 @@
 <?= loadPartial('head') ?>
 <?= loadPartial('navbar'); ?>
 <!-- signup Form  -->
-  <div class="container mt-5 row">
+  <div class="container mt-5">
         <h3 class="text-center mb-4">Sign Up</h3>
 
         <div class="container col-sm-4 mb-5">
@@ -32,7 +32,7 @@
               </div>  
               </form>
 
-              <p class="mt-3">Already have an account? <a href="login.html" class="text-link-primary">Login</a></p>
+              <p class="mt-3">Already have an account? <a href="/login" class="text-link-primary">Login</a></p>
               
         </div>
     </div>

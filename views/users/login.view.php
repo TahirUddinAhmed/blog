@@ -1,7 +1,7 @@
 <?= loadPartial('head') ?>
 <?= loadPartial('navbar'); ?>
  <!-- Login Form -->
- <div class="container mt-5 row">
+ <div class="container mt-5">
         <h3 class="text-center mb-4">Login</h3>
 
         <div class="container col-sm-4 mb-5">
