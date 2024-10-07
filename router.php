@@ -80,6 +80,8 @@ class Router {
                 return; 
             }
         }
+
+        http_response_code(404);
         require basePath('controllers/errors/404.php');
     }
 }
