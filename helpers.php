@@ -16,10 +16,16 @@ function basePath($path = '') {
  * @param string $name
  * @return void
  */
-function loadView($name) {
-   $path = basePath('views/' . $name . '.view.php');
+function loadView($name, $data = []) {
+    $fullPath = basePath('views/' . $name . '.view.php');
+    // $fullPath = $path . $ext;
 
-   require $path;
+   if(!file_exists($fullPath)) {
+     die('View Not found ' . $fullPath);
+   } else {
+    extract($data);
+    require $fullPath;
+   }
 }
 
 /**

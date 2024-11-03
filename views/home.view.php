@@ -3,9 +3,11 @@
 <?= loadPartial('hero-section') ?>        
         <!-- Page content-->
         <div class="container">
+            <!-- <?php //inspect() ?> -->
             <div class="row">
                 <!-- Blog entries-->
                 <div class="col-lg-8">
+                   
                     <!-- Featured blog post-->
                     <div class="card mb-4">
                         <div class="card-body">
@@ -18,44 +20,19 @@
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
                         <div class="col-lg-6">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <a href="single-post.html" class="text-white"><h2 class="card-title h4">Post Title</h2></a>
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="single-post.html">Read more →</a>
+                            <?php foreach($posts as $post) : ?>
+                                 <!-- Blog post-->
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <a href="single-post.html" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
+                                        <div class="small text-muted"><?= $post->created_at ?></div>
+                                        <p class="card-text"><?= $post->content ?></p>
+                                        <a class="btn btn-primary" href="/post/<?= $post->id ?>">Read more →</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <a href="single-post.html" class="text-white"><h2 class="card-title h4">Post Title</h2></a>
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="single-post.html">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <a href="single-post.html" class="text-white"><h2 class="card-title h4">Post Title</h2></a>
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="single-post.html">Read more →</a>
-                                </div>
-                            </div>
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <a href="single-post.html" class="text-white"><h2 class="card-title h4">Post Title</h2></a>
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam.</p>
-                                    <a class="btn btn-primary" href="single-post.html">Read more →</a>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
+                           
+                           
                         </div>
                     </div>
                     <!-- Pagination-->
