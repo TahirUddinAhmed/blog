@@ -62,3 +62,27 @@ function inspectAndDie($value) {
     die(var_dump($value));
     echo '</pre>';
 }
+
+/**
+ * Formate date 
+ *
+ * @param string $date
+ * @return date
+ */
+function formateDate($date) {
+    $newDate = new DateTime($date);
+
+    $formatedDate = $newDate->format('d M, Y');
+
+    return $formatedDate;
+}
+
+/**
+ * Load post image 
+ * 
+ * @param string $image_name
+ * 
+ */
+// function loadPostImage($image_name) {
+//     $path = 
+// }

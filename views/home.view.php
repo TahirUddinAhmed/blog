@@ -24,10 +24,10 @@
                                  <!-- Blog post-->
                                 <div class="card mb-4">
                                     <div class="card-body">
-                                        <a href="single-post.html" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
+                                        <a href="/post?id=<?= $post->id ?>" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
                                         <div class="small text-muted"><?= $post->created_at ?></div>
                                         <p class="card-text"><?= $post->content ?></p>
-                                        <a class="btn btn-primary" href="/post/<?= $post->id ?>">Read more →</a>
+                                        <a class="btn btn-primary" href="/post?id=<?= $post->id ?>">Read more →</a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
