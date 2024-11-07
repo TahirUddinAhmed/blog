@@ -8,33 +8,39 @@
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                    
+                <?php if(!empty($latest)) : ?>
                     <!-- Featured blog post-->
                     <div class="card mb-4">
                         <div class="card-body">
-                            <a href="single-post.html" class="text-white"><h2 class="card-title">Featured Post Title</h2></a>
-                            <div class="small text-muted">January 1, 2023</div>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="single-post.html">Read more →</a>
+                            <a href="/post?id=<?= $latest->id ?>" class="text-white"><h2 class="card-title"><?= $latest->title ?></h2></a>
+                            <div class="small text-muted"><?php formateDate($latest->created_at) ?></div>
+                            <p class="card-text"><?= $latest->content ?></p>
+                            <a class="btn btn-primary" href="/post?id=<?= $latest->id ?>">Read more →</a>
                         </div>
                     </div>
+
+                
                     <!-- Nested row for non-featured blog posts-->
-                    <div class="row">
-                        <div class="col-lg-6">
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <?php if(!empty($posts)) : ?> 
                             <?php foreach($posts as $post) : ?>
+                               <div class="col-lg-6">
                                  <!-- Blog post-->
                                 <div class="card mb-4">
                                     <div class="card-body">
                                         <a href="/post?id=<?= $post->id ?>" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
-                                        <div class="small text-muted"><?= $post->created_at ?></div>
+                                        <div class="small text-muted"><?= formateDate($post->created_at) ?></div>
                                         <p class="card-text"><?= $post->content ?></p>
                                         <a class="btn btn-primary" href="/post?id=<?= $post->id ?>">Read more →</a>
                                     </div>
                                 </div>
+                               </div>
                             <?php endforeach; ?>
-                           
-                           
-                        </div>
+                           <?php endif; ?>
                     </div>
+                    <?php else : ?>
+                        <p class="text-muted">No posts are available</p>
+                    <?php endif; ?>
                     <!-- Pagination-->
                     <nav aria-label="Pagination bg-dark">
                         <hr class="my-0" />
