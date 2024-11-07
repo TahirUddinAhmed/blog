@@ -1,6 +1,6 @@
 <?php
 require '../helpers.php';
-require basePath('Router.php');
+require basePath('Framework/Router.php');
  
 // current uri and HTTP Method
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); 

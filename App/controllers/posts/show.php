@@ -1,5 +1,5 @@
 <?php 
-require basePath('Database.php');
+require basePath('Framework/Database.php');
 
 $config = require basePath('config/db.php');
 
