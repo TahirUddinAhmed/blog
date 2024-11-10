@@ -1,0 +1,16 @@
+{
+    "name": "vendor/blog",
+    "description": "Building a powerfull CMS system",
+    "authors": [
+        {
+            "name": "TahirUddinAhmed"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "Framework/",
+            "App\\": "App/"
+        }
+    },
+    "require": {}
+}

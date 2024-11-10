@@ -1,13 +1,15 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
 require '../helpers.php';
-require basePath('Framework/Router.php');
+// require basePath('Framework/Router.php');
+
+// use Framework\Router;
  
 // current uri and HTTP Method
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); 
 $method = $_SERVER['REQUEST_METHOD'];
-// inspectAndDie($uri);
-// instantiate a Router object 
-$router = new Router();
+
+$router = new Framework\Router();
 
 require basePath('routes.php');
 
