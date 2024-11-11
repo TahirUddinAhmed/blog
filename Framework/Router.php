@@ -2,6 +2,8 @@
 
 namespace Framework;
 
+use App\controllers\ErrorController;
+
 class Router {
     protected $routes = [];
 
@@ -10,14 +12,17 @@ class Router {
      * 
      * @param string $method
      * @param string $uri
-     * @param string $controller
+     * @param string $action
      * @return void
      */
-    protected function registerRoute($method, $uri, $controller) {
+    protected function registerRoute($method, $uri, $action) {
+        list($controller, $controllerMethod) = explode('@', $action);
+
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'controllerMethod' => $controllerMethod
         ];
     }
 
@@ -72,17 +77,59 @@ class Router {
      * @param string $method [Current HTTP method]
      * @return void
      */
-    public function route($uri, $method) {
-        // login 
-        foreach($this->routes as $route) {
-            // if it match the current $uri, and $method
-            if($route['uri'] === $uri && $route['method'] === $method) {
-                require basePath('App/' .$route['controller']);
-                return; 
-            }
-        }
+    public function route($uri) {
+        // get the current HTTP method 
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-        http_response_code(404);
-        require basePath('controllers/errors/404.php');
+        // check of _method
+        if($requestMethod === 'POST' && $_POST['_method']) {
+            // override the request method
+            $requestMethod = strtoupper($_POST['_method']);
+        }
+       
+        foreach($this->routes as $route) {
+            // slip the uri into segments
+            $uriSegments = explode('/', $uri);
+
+            // Slip the route uri into segments 
+            $routeSegments = explode('/', $route['uri']);
+
+
+            // check if the number of segments matches
+            if(count($uriSegments) === count($routeSegments) && strtoupper($route['method']) === $requestMethod) {
+                $params = [];
+
+                $match = true;
+
+                for($i = 0;  $i < count($uriSegments); $i++) {
+                    // If the uri's do not match and there is no params 
+                    // if there are no params inside {} curly braces, means {id}, {slug}
+                    if($routeSegments[$i] != $uriSegments[$i] && !preg_match('/\{(.+?)\}/', $routeSegments[$i])) {
+                        $match = false;
+                        break;
+                    }
+
+                    //  check for the param add add to $params array
+                    if(preg_match('/\{(.+?)\}/', $routeSegments[$i], $matches)) {
+                        $params[$matches[1]] = $uriSegments[$i];
+                    }
+                }
+
+                if($match) {
+                    // extract controller and controller method 
+                    $controller = 'App\\controllers\\'.$route['controller'];
+                    $controllerMethod = $route['controllerMethod'];
+
+                    // instantiate the controller
+                    $controllerInstance = new $controller();
+                    $controllerInstance->$controllerMethod($params);
+                    return; // if found return the function
+                }
+
+            }
+            // inspect($uriSegments);
+            // inspectAndDie($routeSegments);
+            ErrorController::notFound();
+        }
     }
 }
