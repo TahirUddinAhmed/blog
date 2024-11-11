@@ -3,7 +3,6 @@
 <?= loadPartial('hero-section') ?>        
         <!-- Page content-->
         <div class="container">
-            <!-- <?php //inspect() ?> -->
             <div class="row">
                 <!-- Blog entries-->
                 <div class="col-lg-8">
@@ -41,19 +40,9 @@
                     <?php else : ?>
                         <p class="text-muted">No posts are available</p>
                     <?php endif; ?>
-                    <!-- Pagination-->
-                    <nav aria-label="Pagination bg-dark">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4 bg-dark">
-                            <li class="page-item disabled bg-dark"><a class="page-link bg-dark" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link bg-dark" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link bg-dark" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link bg-dark" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link bg-dark" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link bg-dark" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link bg-dark" href="#!">Older</a></li>
-                        </ul>
-                    </nav>
+                    <div class="mt-5 mb-4 text-center">
+                        <a href="/posts" class="border rounded-pill px-4 py-2 text-dark ">View All Posts</a>
+                    </div>
                 </div>
                 <?= loadPartial('side-widgets') ?>
             </div>

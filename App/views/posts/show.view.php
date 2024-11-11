@@ -76,7 +76,7 @@
                     </section>
                 </div>
 
-               
+                <?= loadPartial('side-widgets') ?>
                 
             </div>
         </div>

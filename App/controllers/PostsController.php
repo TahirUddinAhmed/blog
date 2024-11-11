@@ -13,6 +13,27 @@ class PostsController {
         $this->db = new Database($config);
     }
 
+    /**
+     * View all posts
+     * 
+     * @return void
+     */
+    public function index() {
+        $query = "SELECT * FROM posts ORDER BY created_at DESC";
+
+        $posts = $this->db->query($query)->fetchAll();
+
+        loadView('posts/index', [
+            'posts' => $posts
+        ]);
+    }
+
+    /**
+     * View signle posts
+     *
+     * @param [type] $params
+     * @return void
+     */
     public function show($params) {
         $id = $params['id'] ?? '';
 
@@ -25,7 +46,8 @@ class PostsController {
         $post = $this->db->query($query, $params)->fetch();
 
         if(!$post) {
-            ErrorController::notFound();
+            ErrorController::notFound('The post your looking for is not found');
+            exit;
         }
         // Get the author details 
         $params = [ 
