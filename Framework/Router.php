@@ -17,7 +17,6 @@ class Router {
      */
     protected function registerRoute($method, $uri, $action) {
         list($controller, $controllerMethod) = explode('@', $action);
-
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
@@ -34,6 +33,7 @@ class Router {
      * @return void
      */
     public function get($uri, $controller) {
+        // inspectAndDie($uri);
         $this->registerRoute('GET', $uri, $controller);
     }
 
@@ -90,17 +90,17 @@ class Router {
         foreach($this->routes as $route) {
             // slip the uri into segments
             $uriSegments = explode('/', $uri);
-
             // Slip the route uri into segments 
             $routeSegments = explode('/', $route['uri']);
+            // inspectAndDie($routeSegments);
 
+            $match = true;
 
             // check if the number of segments matches
             if(count($uriSegments) === count($routeSegments) && strtoupper($route['method']) === $requestMethod) {
                 $params = [];
-
                 $match = true;
-
+                
                 for($i = 0;  $i < count($uriSegments); $i++) {
                     // If the uri's do not match and there is no params 
                     // if there are no params inside {} curly braces, means {id}, {slug}
@@ -108,18 +108,18 @@ class Router {
                         $match = false;
                         break;
                     }
-
+                    
                     //  check for the param add add to $params array
                     if(preg_match('/\{(.+?)\}/', $routeSegments[$i], $matches)) {
                         $params[$matches[1]] = $uriSegments[$i];
                     }
                 }
-
+                // inspectAndDie($match);
                 if($match) {
                     // extract controller and controller method 
                     $controller = 'App\\controllers\\'.$route['controller'];
                     $controllerMethod = $route['controllerMethod'];
-
+                    // inspectAndDie($controller);
                     // instantiate the controller
                     $controllerInstance = new $controller();
                     $controllerInstance->$controllerMethod($params);
@@ -127,9 +127,8 @@ class Router {
                 }
 
             }
-            // inspect($uriSegments);
-            // inspectAndDie($routeSegments);
-            ErrorController::notFound();
+            
         }
+        ErrorController::notFound();
     }
 }

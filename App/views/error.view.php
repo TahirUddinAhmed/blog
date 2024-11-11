@@ -7,13 +7,12 @@
             <div class="col-md-12 text-center">
                 <div class="lc-block mb-4">
                     <div editable="rich">
-                        <h1 class="fw-bold display-1">404</h1>
+                        <h1 class="fw-bold display-1"><?= $status ?></h1>
                     </div>
                 </div>
                 <div class="lc-block">
                     <div editable="rich">
-                        <p class="h2">Sorry, we can’t find the page you’re looking for. </p>
-                        <p class="lead">Click the button below to go back to the homepage</p>
+                        <p class="h2"><?= $message ?></p>
                     </div>
                 </div>
                 <div class="lc-block">

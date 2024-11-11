@@ -2,19 +2,14 @@
 
 namespace App\controllers;
 
-use Framework\Database;
 
 class ErrorController {
-    protected $db;
-    
-    public function __construct()
-    {
-        $config = require basePath('config/db.php');
-        $this->db = new Database($config);
-    }
 
-    public static function notFound() {
+    public static function notFound($message = "Sorry, we can’t find the page you’re looking for. ") {
         http_response_code(404);
-        loadView('errors/404');
+        loadView('error', [
+            'status' => '404',
+            'message' => $message
+        ]);
     }
 }

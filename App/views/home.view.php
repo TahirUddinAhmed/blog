@@ -12,10 +12,10 @@
                     <!-- Featured blog post-->
                     <div class="card mb-4">
                         <div class="card-body">
-                            <a href="/post?id=<?= $latest->id ?>" class="text-white"><h2 class="card-title"><?= $latest->title ?></h2></a>
+                            <a href="/posts/<?= $latest->id ?>" class="text-white"><h2 class="card-title"><?= $latest->title ?></h2></a>
                             <div class="small text-muted"><?php formateDate($latest->created_at) ?></div>
                             <p class="card-text"><?= $latest->content ?></p>
-                            <a class="btn btn-primary" href="/post?id=<?= $latest->id ?>">Read more →</a>
+                            <a class="btn btn-primary" href="/posts/<?= $latest->id ?>">Read more →</a>
                         </div>
                     </div>
 
@@ -28,10 +28,10 @@
                                  <!-- Blog post-->
                                 <div class="card mb-4">
                                     <div class="card-body">
-                                        <a href="/post?id=<?= $post->id ?>" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
+                                        <a href="/posts/<?= $post->id ?>" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
                                         <div class="small text-muted"><?= formateDate($post->created_at) ?></div>
                                         <p class="card-text"><?= $post->content ?></p>
-                                        <a class="btn btn-primary" href="/post?id=<?= $post->id ?>">Read more →</a>
+                                        <a class="btn btn-primary" href="/posts/<?= $post->id ?>">Read more →</a>
                                     </div>
                                 </div>
                                </div>
