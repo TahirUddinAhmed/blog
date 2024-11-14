@@ -76,7 +76,7 @@
                     </section>
                 </div>
 
-                <?= loadPartial('side-widgets') ?>
+                <?= loadPartial('side-widgets', ['categories' => $categories]) ?>
                 
             </div>
         </div>

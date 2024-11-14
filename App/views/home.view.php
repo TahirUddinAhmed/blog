@@ -44,7 +44,7 @@
                         <a href="/posts" class="border rounded-pill px-4 py-2 text-dark ">View All Posts</a>
                     </div>
                 </div>
-                <?= loadPartial('side-widgets') ?>
+                <?= loadPartial('side-widgets', ['categories' => $categories]) ?>
             </div>
         </div>
 

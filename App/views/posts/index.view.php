@@ -5,7 +5,7 @@
        <div class="container">
             <div class="row">
 
-                <?= loadPartial('side-widgets') ?>
+                <?= loadPartial('side-widgets', ['categories' => $categories]) ?>
                 <?php if(!empty($posts)) : ?>
                 <!-- Blog entries-->
                 <div class="col-lg-9">

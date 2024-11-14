@@ -4,7 +4,7 @@ namespace App\controllers;
 
 use Framework\Database;
 
-class PostsController {
+class PostsController extends HomeController {
     protected $db;
 
     public function __construct()
@@ -24,7 +24,8 @@ class PostsController {
         $posts = $this->db->query($query)->fetchAll();
 
         loadView('posts/index', [
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $this->getCategory()
         ]);
     }
 
@@ -59,7 +60,8 @@ class PostsController {
 
         loadView('posts/show', [
             'post' => $post,
-            'author' => $author
+            'author' => $author,
+            'categories' => $this->getCategory()
         ]);
     }
 }

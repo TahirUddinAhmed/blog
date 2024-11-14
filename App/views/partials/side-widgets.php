@@ -1,26 +1,23 @@
 <!-- Side widgets-->
 <div class="col-lg-3">
-
     <!-- Categories widget-->
     <div class="card mb-4">
         <div class="card-header">Categories</div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-sm-6">
+            <?php if(!empty($categories)) : ?>
+            <div class="row row-cols-1 gap-2">
+                <?php foreach($categories as $category) : ?>
+                <div class="col">
                     <ul class="list-unstyled mb-0">
-                        <li><a class="text-link-primary" href="#!">Web Design</a></li>
-                        <li><a class="text-link-primary" href="#!">HTML</a></li>
-                        <li><a class="text-link-primary" href="#!">Freebies</a></li>
+                        <li><a class="text-link-primary" href="/category/<?= $category->id ?>/posts"><?= $category->name ?></a></li>
                     </ul>
                 </div>
-                <div class="col-sm-6">
-                    <ul class="list-unstyled mb-0">
-                        <li><a class="text-link-primary" href="#!">JavaScript</a></li>
-                        <li><a class="text-link-primary" href="#!">CSS</a></li>
-                        <li><a class="text-link-primary" href="#!">Tutorials</a></li>
-                    </ul>
-                </div>
+                <?php endforeach; ?>
+                
             </div>
+            <?php else : ?>
+                <p class="text-muted">No Categories available</p>
+            <?php endif; ?>
         </div>
     </div>
     <!-- Side widget-->

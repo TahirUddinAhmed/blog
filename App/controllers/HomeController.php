@@ -22,10 +22,24 @@ class HomeController {
         ];
         
         $posts = $this->db->query("SELECT * FROM posts WHERE id != :latestId ORDER BY created_at DESC LIMIT 8", $params)->fetchAll();
-        
+
         loadView('home', [
             'latest' => $latest,
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $this->getCategory()
         ]);
+    }
+
+    /**
+     * Get all the categories 
+     * 
+     * @return string $data
+     */
+    protected function getCategory() {
+        $query = "SELECT * FROM category ORDER BY created_at DESC";
+
+        $data = $this->db->query($query)->fetchAll();
+
+        return $data;
     }
 }
