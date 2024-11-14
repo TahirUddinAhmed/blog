@@ -5,7 +5,7 @@ $router->get('/about', 'InfoController@about');
 $router->get('/contact', 'InfoController@contact');
 $router->get('/posts', 'PostsController@index');
 $router->get('/posts/{id}', 'PostsController@show');
-
+$router->get('/category/{id}/posts', 'PostsController@categories');
 
 // $router->get('/posts', 'PostController@show');
 // $router->get('/login', 'controllers/users/login.php');

@@ -64,4 +64,34 @@ class PostsController extends HomeController {
             'categories' => $this->getCategory()
         ]);
     }
+
+    /**
+     * Show individual category posts
+     * 
+     * @return void
+     */
+    public function categories($params) {
+        $id = $params['id'] ?? '';
+
+        $params = [
+            'id' => $id
+        ];
+
+        $category = $this->getCategory($params);
+
+        // get all posts that belongs to this category 
+        $params = [
+            'category_id' => $id
+        ];
+
+        $posts = $this->db->query('SELECT * FROM posts WHERE category_id = :category_id', $params)->fetchAll();
+
+        loadView('/posts/showCategory', [
+            'category' => $category,
+            'posts' => $posts,
+            'categories' => $this->getCategory()
+        ]);
+        // inspectAndDie($posts);
+        
+    }
 }

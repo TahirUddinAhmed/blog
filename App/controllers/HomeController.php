@@ -31,15 +31,44 @@ class HomeController {
     }
 
     /**
-     * Get all the categories 
+     * Get all the categories (if the params has one element)
      * 
      * @return string $data
      */
-    protected function getCategory() {
-        $query = "SELECT * FROM category ORDER BY created_at DESC";
+    protected function getCategory($params = []) {
 
-        $data = $this->db->query($query)->fetchAll();
+        if(empty($params)) {
+            $query = "SELECT * FROM category ORDER BY created_at DESC";
+            $data = $this->db->query($query)->fetchAll();
 
-        return $data;
+            return $data;
+        } else {
+            // prepare the query 
+            $allowedFields = ['id', 'name'];
+
+            $newData = array_intersect_key($params, array_flip($allowedFields));
+
+            // check if the array has one element 
+            if(count($newData) === 1) {
+                $field = implode('=>', array_flip($newData));
+                // $values = implode('=>', array_flip($newData));
+                $value = ':' . implode('=>', array_flip($newData));
+                $query = "SELECT * FROM category WHERE {$field} = {$value}";
+
+                $data = $this->db->query($query, $params)->fetch();
+
+                if(!$data) {
+                    ErrorController::notFound('Category not found');
+                    exit;
+                }
+                return $data;
+            }
+            // $fields = [];
+            // foreach($newData as $data) {
+
+            // }
+            
+        }
+        
     }
 }
