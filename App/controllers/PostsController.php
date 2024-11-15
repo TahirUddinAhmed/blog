@@ -94,4 +94,13 @@ class PostsController extends HomeController {
         // inspectAndDie($posts);
         
     }
+
+    /**
+     * Load the create post page
+     * 
+     * @return void
+     */
+    public function create() {
+        loadView('admin/create-post');
+    }
 }

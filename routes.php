@@ -6,6 +6,8 @@ $router->get('/contact', 'InfoController@contact');
 $router->get('/posts', 'PostsController@index');
 $router->get('/posts/{id}', 'PostsController@show');
 $router->get('/category/{id}/posts', 'PostsController@categories');
+$router->get('/admin', 'UserController@admin');
+$router->get('/admin/posts/create', 'PostsController@create');
 
 // $router->get('/posts', 'PostController@show');
 // $router->get('/login', 'controllers/users/login.php');
