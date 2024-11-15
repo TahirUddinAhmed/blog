@@ -6,7 +6,7 @@
           <div class="container-fluid p-0">
             <h1 class="h3 mb-3">Create Post</h1>
 
-            <form method="POST" action="" enctype="multipart/form-data">
+            <form method="POST" action="/admin/posts" enctype="multipart/form-data">
               <div class="row border bg-white rounded p-3">
                 <div class="col-8">
                   <div class="mb-3">
@@ -20,15 +20,19 @@
                   </div>
 
                   <div class="mb-3">
+                    <?php if(!empty($categories)) : ?>
                     <label for="category" class="form-label"
                       >Select Category</label
                     >
-                    <select class="form-select mb-3">
+                    <select class="form-select mb-3" name="category">
                       <option selected>Select Category</option>
-                      <option value="Web Development">Web Development</option>
-                      <option value="Version Control">Version Control</option>
-                      <option value="Java">Java</option>
-                    </select>
+                      <?php foreach($categories as $category) : ?>
+                        <option value="<?= $category->name ?>"><?= $category->name ?></option>
+                      <?php endforeach; ?>
+                      </select>
+                      <?php else : ?>
+                       <a href="#" class=""><strong>Create new Category </strong><i class="align-middle" data-feather="plus"></i></a>
+                      <?php endif; ?>
                   </div>
 
                   <div class="mb-3">
@@ -42,9 +46,10 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="tags" class="form-label">Content</label>
+                    <label for="content" class="form-label">Content</label>
                     <textarea
                       class="form-control"
+                      name="content"
                       rows="10"
                       placeholder="Write post content..."
                     ></textarea>
@@ -56,7 +61,8 @@
                     <label for="title" class="form-label">Featured image</label>
                     <input
                         type="file"
-                        name="title"
+                        name="post_image"
+                        name="post_image"
                         class="form-control"
                         accept="image/png, image/jpeg, image/jpg, image/webp"
                     />
@@ -65,7 +71,7 @@
                     <label for="category" class="form-label"
                       >Post Status</label
                     >
-                    <select class="form-select mb-3">
+                    <select class="form-select mb-3" name="status">
                       <option selected>Select Status</option>
                       <option value="private">Private</option>
                       <option value="draft">Draft</option>

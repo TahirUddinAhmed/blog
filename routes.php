@@ -9,10 +9,4 @@ $router->get('/category/{id}/posts', 'PostsController@categories');
 $router->get('/admin', 'UserController@admin');
 $router->get('/admin/posts/create', 'PostsController@create');
 
-// $router->get('/posts', 'PostController@show');
-// $router->get('/login', 'controllers/users/login.php');
-// $router->get('/signup', 'controllers/users/signup.php');
-// $router->get('/admin', 'Controllers/admin/index.php');
-// $router->get('/about', 'Controllers/about.php');
-// $router->get('/contact', 'Controllers/contact.php');
-// $router->get('/post', 'Controllers/posts/show.php');
+$router->post('/admin/posts', 'PostsController@store');

@@ -101,6 +101,17 @@ class PostsController extends HomeController {
      * @return void
      */
     public function create() {
-        loadView('admin/create-post');
+        loadView('admin/create-post', [
+            'categories' => $this->getCategory()
+        ]);
+    }
+
+    /**
+     * Creat post Store data in the database
+     * 
+     * @return void
+     */
+    public function store() {
+        inspectAndDie($_POST);
     }
 }

@@ -82,7 +82,7 @@ class Router {
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         // check of _method
-        if($requestMethod === 'POST' && $_POST['_method']) {
+        if($requestMethod === 'POST' && isset($_POST['_method'])) {
             // override the request method
             $requestMethod = strtoupper($_POST['_method']);
         }
