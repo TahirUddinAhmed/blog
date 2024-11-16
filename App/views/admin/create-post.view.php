@@ -69,10 +69,10 @@
                     <input
                         type="file"
                         name="post_image"
-                        name="post_image"
-                        class="form-control"
-                        accept="image/png, image/jpeg, image/jpg, image/webp"
+                        class="form-control <?= isset($errors['post_image']) ? 'border-danger' : '' ?>"
+                        
                     />
+                    <span class="text-danger"><?= $errors['post_image'] ?? '' ?></span>
                   </div>
                   <div class="mb-4">
                     <label for="category" class="form-label"

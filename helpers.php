@@ -4,7 +4,7 @@
  * Base Path
  * 
  * @param string $path
- * @return void
+ * @return string
  */
 function basePath($path = '') {
     return __DIR__ . '/' . $path;

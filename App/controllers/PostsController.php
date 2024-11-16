@@ -7,7 +7,6 @@ use Framework\Validation;
 
 class PostsController extends HomeController {
     protected $db;
-    private $uploadDir = 'public/img/uploads/featuredImage/';
     
     public function __construct()
     {
@@ -135,6 +134,31 @@ class PostsController extends HomeController {
             }
         }
 
+         // Validate file upload
+        if ($_FILES['post_image']['error'] === UPLOAD_ERR_NO_FILE) {
+            $errors['post_image'] = "Post Featured Image is required";
+        } else {
+            $allowed_ext = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+            $file_size = $_FILES['post_image']['size'];
+            $file_temp = $_FILES['post_image']['tmp_name'];
+            $file_type = $_FILES['post_image']['type'];
+
+            if (!in_array($file_type, $allowed_ext)) {
+                $errors['post_image'] = 'Only png, jpg, jpeg, and webp are allowed';
+            } else {
+                $check = getimagesize($file_temp);
+
+                $maxFileSize = .5 * 1024 * 1024; // 500KB
+
+                if($file_size > $maxFileSize) {
+                    $errors['post_image'] = 'Featured image is too large, it must be less than 500KB';
+                }
+
+            }
+        }
+
+        // inspectAndDie($_FILES['post_image']);
         if(!empty($errors)) {
             loadView('admin/create-post', [
                 'errors' => $errors,
@@ -142,9 +166,24 @@ class PostsController extends HomeController {
                 'categories' => $this->getCategory()
             ]);
             exit;
-        }
+        } 
 
-        inspectAndDie($newPostsData);
+        // Handle image upload
+        $fileExt = pathinfo($_FILES['post_image']['name'], PATHINFO_EXTENSION);
+
+        $newPostsData['post_image'] = 'postImg_' . uniqid() . '.' . $fileExt;
+
+        $targetDir = basePath('public/upload/featuredImage/');
+
+        if(!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+        
+        $targetPath = $targetDir . $newPostsData['post_image'];
+
+        if(move_uploaded_file($_FILES['post_image']['tmp_name'], $targetPath)) {
+            
+        }
 
 
     }
