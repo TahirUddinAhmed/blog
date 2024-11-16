@@ -78,6 +78,18 @@ function formateDate($date) {
 }
 
 /**
+ * Sanitize data 
+ * 
+ * @param string $dirty
+ * @return string
+ */
+function sanitize($dirty) {
+    $dirty = trim($dirty);
+
+    return filter_var($dirty, FILTER_SANITIZE_SPECIAL_CHARS);
+}
+
+/**
  * Load post image 
  * 
  * @param string $image_name

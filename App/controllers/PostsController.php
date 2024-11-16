@@ -3,10 +3,12 @@
 namespace App\controllers;
 
 use Framework\Database;
+use Framework\Validation;
 
 class PostsController extends HomeController {
     protected $db;
-
+    private $uploadDir = 'public/img/uploads/featuredImage/';
+    
     public function __construct()
     {
         $config = require basePath('config/db.php');
@@ -112,6 +114,40 @@ class PostsController extends HomeController {
      * @return void
      */
     public function store() {
-        inspectAndDie($_POST);
+        // make the query 
+        $allowed_fields = ['title', 'category_id', 'tags', 'content', 'status'];
+
+        $newPostsData = array_intersect_key($_POST, array_flip($allowed_fields));
+
+        $newPostsData['author_id'] = 1;
+
+        $newPostsData = array_map('sanitize', $newPostsData);
+
+
+        // required fields
+        $requiredFields = ['title', 'category_id', 'tags', 'content'];
+
+        $errors = [];
+
+        foreach($requiredFields as $field) {
+            if(empty($newPostsData[$field]) && !Validation::string($newPostsData[$field])) {
+                $errors[$field] = ucfirst($field) . " is required";
+            }
+        }
+
+        if(!empty($errors)) {
+            loadView('admin/create-post', [
+                'errors' => $errors,
+                'posts' => $newPostsData,
+                'categories' => $this->getCategory()
+            ]);
+            exit;
+        }
+
+        inspectAndDie($newPostsData);
+
+
     }
+
+
 }
