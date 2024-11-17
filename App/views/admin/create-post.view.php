@@ -82,7 +82,7 @@
                       <option selected value="draft" default>Select Status</option>
                       <option value="private">Private</option>
                       <option value="draft">Draft</option>
-                      <option value="public">Public</option>
+                      <option value="published">Published</option>
                     </select>
                   </div>
 

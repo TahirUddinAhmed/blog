@@ -89,12 +89,15 @@ function sanitize($dirty) {
     return filter_var($dirty, FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
+
 /**
- * Load post image 
+ * Redirect 
  * 
- * @param string $image_name
- * 
+ * @param string $url
+ * @return void
  */
-// function loadPostImage($image_name) {
-//     $path = 
-// }
+function redirect($url) {
+    header("Location: {$url}");
+    exit;
+}
+

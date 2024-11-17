@@ -21,7 +21,7 @@
                             <?php endforeach; ?>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        <figure class="mb-4"><img class="img-fluid rounded border" src="<?= !empty($post->post_image) ? '../upload/featuredImage/' . $post->post_image : 'https://dummyimage.com/900x400/ced4da/6c757d.jpg' ?>" alt="..." /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
                             <?= $post->content ?>

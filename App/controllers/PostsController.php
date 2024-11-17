@@ -122,7 +122,9 @@ class PostsController extends HomeController {
 
         $newPostsData = array_map('sanitize', $newPostsData);
 
-
+        // Define allowed status values
+        $allowedStatusValues = ['draft', 'published', 'private'];
+    
         // required fields
         $requiredFields = ['title', 'category_id', 'tags', 'content'];
 
@@ -132,6 +134,11 @@ class PostsController extends HomeController {
             if(empty($newPostsData[$field]) && !Validation::string($newPostsData[$field])) {
                 $errors[$field] = ucfirst($field) . " is required";
             }
+        }
+        
+        // Validate 'status' field
+        if (!in_array($newPostsData['status'], $allowedStatusValues)) {
+            $errors['status'] = "Invalid status value. Allowed values are: " . implode(', ', $allowedStatusValues);
         }
 
          // Validate file upload
@@ -158,7 +165,7 @@ class PostsController extends HomeController {
             }
         }
 
-        // inspectAndDie($_FILES['post_image']);
+        // Check for errors
         if(!empty($errors)) {
             loadView('admin/create-post', [
                 'errors' => $errors,
@@ -181,8 +188,33 @@ class PostsController extends HomeController {
         
         $targetPath = $targetDir . $newPostsData['post_image'];
 
+
         if(move_uploaded_file($_FILES['post_image']['tmp_name'], $targetPath)) {
-            
+            $fields = [];
+
+            foreach($newPostsData as $data => $value) {
+                $fields[] = $data;
+            }
+
+            $fields = implode(', ', $fields);
+
+            $values = [];
+
+            foreach($newPostsData as $data => $value) {
+                if($value === '') {
+                    $newPostsData[$data] = null;
+                }
+
+                $values[] = ':' . $data;
+            }
+
+            $values = implode(',', $values);
+
+            $query = "INSERT INTO posts ({$fields}) VALUES ({$values})";
+
+            $this->db->query($query, $newPostsData);
+
+            redirect('/posts');
         }
 
 
