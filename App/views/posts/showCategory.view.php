@@ -20,7 +20,7 @@
                                     <div class="card-body">
                                         <a href="/posts/<?= $post->id ?>" class="text-white"><h2 class="card-title h4"><?= $post->title ?></h2></a>
                                         <div class="small text-muted"><?= formateDate($post->created_at) ?></div>
-                                        <p class="card-text"><?= $post->content ?></p>
+                                        <p class="card-text"><?= shortenString($post->content)  ?></p>
                                         <a class="btn btn-primary" href="/posts/<?= $post->id ?>">Read more →</a>
                                     </div>
                                 </div>

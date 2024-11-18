@@ -101,3 +101,19 @@ function redirect($url) {
     exit;
 }
 
+/**
+ * Shorten a string of content 
+ * 
+ * @param string $string
+ * @return string
+ */
+function shortenString($string, $lastLength = 239) {
+    $str_len = strlen($string);
+
+    if($str_len >= 240) {
+        return substr($string, 0, $lastLength) . "...";
+    }
+
+    return $string;
+}
+

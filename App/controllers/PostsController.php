@@ -214,6 +214,8 @@ class PostsController extends HomeController {
 
             $this->db->query($query, $newPostsData);
 
+            
+
             redirect('/posts');
         }
 
