@@ -38,7 +38,7 @@
                             <a class="sidebar-link ms-3" href="/admin/posts/create">Create a post</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link ms-3" href="#submenu2">View Posts</a>
+                            <a class="sidebar-link ms-3" href="/admin/posts/viewall">View Posts</a>
                         </li>
                     </ul>
                 </div>

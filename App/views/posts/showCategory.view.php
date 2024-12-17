@@ -28,7 +28,7 @@
                     <?php endforeach; ?>
                     </div>
                     <!-- Pagination-->
-                    <!-- <nav aria-label="Pagination bg-dark">
+                    <nav aria-label="Pagination bg-dark">
                         <hr class="my-0" />
                         <ul class="pagination justify-content-center my-4 bg-dark">
                             <li class="page-item disabled bg-dark"><a class="page-link bg-dark" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
@@ -39,7 +39,7 @@
                             <li class="page-item"><a class="page-link bg-dark" href="#!">15</a></li>
                             <li class="page-item"><a class="page-link bg-dark" href="#!">Older</a></li>
                         </ul>
-                    </nav> -->
+                    </nav>
                     <?php else : ?>
                         <h4 class="text-muted">No posts available</h4>
                     <?php endif; ?>

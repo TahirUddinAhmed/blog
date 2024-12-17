@@ -10,7 +10,7 @@
                         <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/posts">All Posts</a></li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white block" href="/login">login</a>
+                            <a class="nav-link btn btn-primary text-white block" href="/admin">login</a>
                         </li>
                     </ul>
                 </div>

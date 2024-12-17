@@ -102,7 +102,7 @@ class PostsController extends HomeController {
      * @return void
      */
     public function create() {
-        loadView('admin/create-post', [
+        loadView('admin/posts/create-post', [
             'categories' => $this->getCategory()
         ]);
     }
@@ -167,7 +167,7 @@ class PostsController extends HomeController {
 
         // Check for errors
         if(!empty($errors)) {
-            loadView('admin/create-post', [
+            loadView('admin/posts/create-post', [
                 'errors' => $errors,
                 'posts' => $newPostsData,
                 'categories' => $this->getCategory()
@@ -221,6 +221,42 @@ class PostsController extends HomeController {
 
 
     }
+
+    /**
+     * View All Posts 
+     * 
+     * @return void
+     */
+    public function viewAll() {
+       $query = "SELECT * FROM posts ORDER BY created_at DESC";
+       $postAll = $this->db->query($query)->fetchAll();
+       
+       if(!$postAll) {
+        ErrorController::notFound("Something goes worng");
+        exit;
+       }
+       foreach($postAll as $post) {
+        $category_id = $post->category_id;
+        $query = "SELECT name FROM category WHERE id = :id";
+
+        $params = [
+            'id' => $category_id
+        ];
+
+        $category_name = $this->db->query($query, $params)->fetch();
+
+        $post->category_name = $category_name->name;
+       }
+
+
+
+    //    inspect($postAll);
+       loadView('/admin/posts/viewall', [
+        'posts' => $postAll,
+       ]);
+    }
+
+
 
 
 }

@@ -7,14 +7,14 @@
                   <a
                     class="text-muted"
                     href="https://github.com/TahirUddinAhmed"
-                    target="_blank"
+                
                     ><strong>Tahir Uddin Ahmed</strong></a
                   >
                   -
                   <a
                     class="text-muted"
                     href="https://github.com/TahirUddinAhmed/blog"
-                    target="_blank"
+                
                     ><strong>CampusCourse</strong></a
                   >
                   &copy; 2024
@@ -25,32 +25,32 @@
                   <li class="list-inline-item">
                     <a
                       class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
+                      href="#"
+                  
                       >Support</a
                     >
                   </li>
                   <li class="list-inline-item">
                     <a
                       class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
+                      href="#"
+                  
                       >Help Center</a
                     >
                   </li>
                   <li class="list-inline-item">
                     <a
                       class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
+                      href="#"
+                  
                       >Privacy</a
                     >
                   </li>
                   <li class="list-inline-item">
                     <a
                       class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
+                      href="#"
+                  
                       >Terms</a
                     >
                   </li>
