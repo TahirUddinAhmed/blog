@@ -117,3 +117,21 @@ function shortenString($string, $lastLength = 239) {
     return $string;
 }
 
+
+/**
+ * Load post image 
+ * 
+ * @param string $image_name
+ * @return void
+ */
+function loadPostImage($image_name) {
+    $path = '/public/upload/featuredImage/' . $image_name;
+    // $path = basePath('public/upload/featuredImage/' . $image_name);
+
+    if(!file_exists($path)) {
+        die('image Not found ' . $path);
+    } else {
+        echo '<img src="'. $path .'" alt="">';
+    }
+   
+}

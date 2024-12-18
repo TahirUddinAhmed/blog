@@ -256,7 +256,42 @@ class PostsController extends HomeController {
        ]);
     }
 
+    /**
+     * Edit Post
+     * 
+     * @return void
+     */
+    public function edit($params) {
+        $id = $params['id'] ?? null;
 
+        $query = "SELECT * FROM posts WHERE id = :id";
+
+        $param = [
+            'id' => $id
+        ];
+
+        $post = $this->db->query($query, $param)->fetch();
+
+
+        if(!$post) {
+            ErrorController::notFound('Sorry, no post is found');
+            exit;
+        }
+        // fetch the category name
+        $category_id = $post->category_id;
+        $param = [
+            'id' => $category_id
+        ];
+
+        $category_name = $this->db->query("SELECT name FROM category WHERE id = :id", $param)->fetch();
+
+        $post->category_name = $category_name->name;
+
+        loadView('admin/posts/edit-post', [
+            'post' => $post,
+            'categories' => $this->getCategory()
+        ]);
+    }
 
 
 }

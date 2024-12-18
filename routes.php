@@ -10,3 +10,4 @@ $router->get('/admin', 'UserController@admin');
 $router->get('/admin/posts/create', 'PostsController@create');
 $router->get('/admin/posts/viewall', 'PostsController@viewAll');
 $router->post('/admin/posts', 'PostsController@store');
+$router->get('/admin/posts/{id}/edit', 'PostsController@edit');
