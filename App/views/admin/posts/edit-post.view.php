@@ -4,7 +4,8 @@
 <main class="content">
           <div class="container-fluid p-0">
             <h1 class="h3 mb-3">Edit Post</h1>
-            <form method="" action="" enctype="multipart/form-data">
+            <form method="POST" action="/admin/posts/<?= $post->id ?>/edit" enctype="multipart/form-data">
+              <input type="hidden" name="_method" value="PUT">
               <div class="row border bg-white rounded p-3">
                 <div class="col-8">
                   <div class="mb-3">
@@ -22,10 +23,10 @@
                   <div class="mb-3">
                     <?php if(!empty($categories)) : ?>
                     <label for="category" class="form-label"
-                      >Select Category: <?= $post->category_name ?></label
+                      >Category: <span class="badge bg-success"><?= $post->category_name ?></span></label
                     >
                     <select class="form-select mb-3 <?= isset($errors['category_id']) ? 'border-danger' : '' ?>" name="category_id">
-                      <option selected value="<?= $post->category_id ?>">Select Category</option>
+                      <option selected value="<?= $post->category_id ?>">Choose</option>
                       <?php foreach($categories as $category) : ?>
                         <option value="<?= $category->id ?>"><?= $category->name ?></option>
                       <?php endforeach; ?>
@@ -80,7 +81,17 @@
                     </div>
                   <div class="mb-4">
                     <label for="category" class="form-label"
-                      >Post Status: <?= $post->status ?></label
+                      >Post Status: <span class="badge 
+                                        <?php if($post->status === 'published'): ?>
+                                            bg-success
+                                        <?php elseif($post->status === 'draft') : ?>
+                                            bg-warning
+                                        <?php else : ?>
+                                            bg-danger
+                                        <?php endif; ?>
+                                        ">
+                                        <?= $post->status ?>
+                                    </span></label
                     >
                     <select class="form-select mb-3" name="status">
                       <option selected value="<?= $post->status ?>" default>Select Status</option>
@@ -90,7 +101,7 @@
                     </select>
                   </div>
 
-                  <button type="submit" class="btn btn-primary d-inline-block w-100">Add Post</button>
+                  <button type="submit" class="btn btn-primary d-inline-block w-100">Update Post</button>
 
                 </div>
               </div>

@@ -7,6 +7,7 @@ use Framework\Validation;
 
 class PostsController extends HomeController {
     protected $db;
+    private $status = 'published';
     
     public function __construct()
     {
@@ -20,9 +21,12 @@ class PostsController extends HomeController {
      * @return void
      */
     public function index() {
-        $query = "SELECT * FROM posts ORDER BY created_at DESC";
+        $params = [
+            'status' => $this->status
+        ];
+        $query = "SELECT * FROM posts WHERE status = :status ORDER BY created_at DESC";
 
-        $posts = $this->db->query($query)->fetchAll();
+        $posts = $this->db->query($query, $params)->fetchAll();
 
         loadView('posts/index', [
             'posts' => $posts,
@@ -82,10 +86,11 @@ class PostsController extends HomeController {
 
         // get all posts that belongs to this category 
         $params = [
+            'status' => $this->status,
             'category_id' => $id
         ];
 
-        $posts = $this->db->query('SELECT * FROM posts WHERE category_id = :category_id', $params)->fetchAll();
+        $posts = $this->db->query('SELECT * FROM posts WHERE category_id = :category_id AND status = :status', $params)->fetchAll();
 
         loadView('/posts/showCategory', [
             'category' => $category,
@@ -256,6 +261,7 @@ class PostsController extends HomeController {
        ]);
     }
 
+
     /**
      * Edit Post
      * 
@@ -283,14 +289,138 @@ class PostsController extends HomeController {
             'id' => $category_id
         ];
 
-        $category_name = $this->db->query("SELECT name FROM category WHERE id = :id", $param)->fetch();
+        $category = $this->db->query("SELECT name FROM category WHERE id = :id", $param)->fetch();
 
-        $post->category_name = $category_name->name;
+        $post->category_name = $category->name;
 
         loadView('admin/posts/edit-post', [
             'post' => $post,
             'categories' => $this->getCategory()
         ]);
+    }
+
+    /**
+     * Update Post
+     * 
+     * @param array $params
+     * @return void
+     */
+    public function update($params) {
+        $id = $params['id'] ?? '';
+
+        $param = [
+            'id' => $id
+        ];
+
+        $post = $this->db->query("SELECT * FROM posts WHERE id = :id", $param)->fetch();
+
+        if(!$post) {
+            ErrorController::notFound('Post not found');
+            exit;
+        }
+
+        // fetch category by id 
+        $param = [
+            'id' => $post->category_id
+        ];
+
+        $category = $this->db->query("SELECT name FROM category WHERE id = :id", $param)->fetch();
+
+        $post->category_name = $category->name;
+        
+
+        $allowed_fields = ['title', 'category_id', 'tags', 'content', 'status'];
+        $updatePostData = array_intersect_key($_POST, array_flip($allowed_fields));
+
+        $updatePostData['author_id'] = 1; // static value 
+        $updatePostData['id'] = $id;
+        // sanitize all the data 
+        $updatePostData = array_map('sanitize', $updatePostData);
+
+        // Define allowed status values
+        $allowedStatusValues = ['draft', 'published', 'private'];
+    
+        // required fields
+        $requiredFields = ['title', 'category_id', 'tags', 'content'];
+
+        $errors = [];
+
+        foreach($requiredFields as $field) {
+            if(empty($updatePostData[$field]) && !Validation::string($updatePostData[$field])) {
+                $errors[$field] = ucfirst($field) . " is required";
+            }
+        }
+        
+        // Validate 'status' field
+        if (!in_array($updatePostData['status'], $allowedStatusValues)) {
+            $errors['status'] = "Invalid status value. Allowed values are: " . implode(', ', $allowedStatusValues);
+        }
+        
+        if(!empty($errors)) {
+            loadView('admin/posts/edit-post', [
+            'post' => $post,
+            'errors' => $errors,
+            'categories' => $this->getCategory()
+            ]);
+        }
+
+        if($_FILES['post_image']['error'] === UPLOAD_ERR_NO_FILE) {
+            $this->postUpdate($updatePostData);
+        } else {
+            // need image resizing and naming and uploading the image 
+            $allowed_ext = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+            $file_size = $_FILES['post_image']['size'];
+            $file_temp = $_FILES['post_image']['tmp_name'];
+            $file_type = $_FILES['post_image']['type'];
+
+            if (!in_array($file_type, $allowed_ext)) {
+                $errors['post_image'] = 'Only png, jpg, jpeg, and webp are allowed';
+            } else {
+                $check = getimagesize($file_temp);
+
+                $maxFileSize = .5 * 1024 * 1024; // 500KB
+
+                if($file_size > $maxFileSize) {
+                    $errors['post_image'] = 'Featured image is too large, it must be less than 500KB';
+                }
+
+            }
+
+            if(!empty($errors)) {
+                loadView('admin/posts/edit-post', [
+                    'post' => $post,
+                    'errors' => $errors,
+                    'categories' => $this->getCategory()
+                ]);
+            }
+        }
+        // inspect($_FILES);
+        
+    }
+
+    /**
+     * Post Update 
+     * 
+     * @param array $params
+     * @param string $success_msg
+     * @return void
+     */
+    private function postUpdate($params, $success_msg = '') {
+        // update the data directly 
+        $updateFields = [];
+
+        foreach($params as $field => $value) {
+            $updateFields[] = "$field = :$field";
+        }
+
+        // convert the array into comma separted string 
+        $updateFields = implode(', ', $updateFields);
+
+        $query = "UPDATE posts SET {$updateFields} WHERE id = :id";
+
+        $this->db->query($query, $params);
+        redirect("/admin/posts/viewall");
     }
 
 

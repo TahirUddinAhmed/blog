@@ -5,6 +5,7 @@ use Framework\Database;
 
 class HomeController {
     protected $db;
+    private $status = 'published';
 
     public function __construct()
     {   
@@ -14,14 +15,19 @@ class HomeController {
 
     // index
     public function index() {
-        $latest = $this->db->query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 1')->fetch();
+        $params = [
+            'status' => $this->status
+        ];
+
+        $latest = $this->db->query('SELECT * FROM posts WHERE status = :status ORDER BY created_at DESC LIMIT 1', $params)->fetch();
 
         $latest_id = $latest->id;
         $params = [
+            'status' => $this->status,
             'latestId' => $latest_id
         ];
         
-        $posts = $this->db->query("SELECT * FROM posts WHERE id != :latestId ORDER BY created_at DESC LIMIT 8", $params)->fetchAll();
+        $posts = $this->db->query("SELECT * FROM posts WHERE id != :latestId AND status = :status ORDER BY created_at DESC LIMIT 8", $params)->fetchAll();
 
         loadView('home', [
             'latest' => $latest,
