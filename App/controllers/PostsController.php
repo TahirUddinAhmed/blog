@@ -433,6 +433,23 @@ class PostsController extends HomeController {
         $post_id = $params['id'] ?? '';
 
         // Get the post
+        $params = [
+            'id' => $post_id
+        ];
+        
+        $query = "SELECT * FROM posts WHERE id = :id";
+        $posts = $this->db->query($query, $params)->fetch();
+
+        $targetDir = basePath('public/upload/featuredImage/');
+        $targetPath = $targetDir . $posts->post_image;
+        
+        if(file_exists($targetPath)) {
+            unlink($targetPath);
+        }
+
+        $this->db->query("DELETE FROM posts WHERE id = :id", $params);
+
+        redirect("/admin/posts/viewall");
         
     }
 
