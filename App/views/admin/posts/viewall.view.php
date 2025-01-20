@@ -44,10 +44,22 @@
                                     </span></td>
                                 <td class="d-none d-md-table-cell"><?= formateDate($post->created_at) ?></td>
                                 <td class="d-none d-md-table-cell">
-                                    <!-- Edit post -->
-                                     <a href="/admin/posts/<?= $post->id ?>/edit" class="btn btn-sm btn-success me-2 rounded"><i class="align-middle" data-feather="edit"></i>
-                                     <!-- Delete Post -->
-                                      <a href="#" class="btn btn-sm btn-danger me-2 rounded"><i class="align-middle" data-feather="delete"></i>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <!-- Edit post -->
+                                             <a href="/admin/posts/<?= $post->id ?>/edit" class="btn btn-sm btn-success me-2 rounded"><i class="align-middle" data-feather="edit"></i></a>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <!-- Delete Post -->
+                                            <form method="POST" action="/admin/posts/<?= $post->id ?>">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-sm btn-danger me-2 rounded"><i class="align-middle" data-feather="delete"></i></button>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
                                 </td>
                             </tr>
                             <?php $sno++; ?>

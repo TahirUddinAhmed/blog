@@ -1,16 +1,22 @@
 <?= loadPartial('head') ?>
 <?= loadPartial('navbar'); ?>
-<?= loadPartial('search') ?>       
+<?php if(!isset($title)) : ?>
+<?= loadPartial('search') ?>
+<?php endif; ?>       
        <!-- Page content-->
        <div class="container">
             <div class="row">
-
+                
                 <?= loadPartial('side-widgets', ['categories' => $categories]) ?>
+                <div class="col-lg-9">
+                <?php if(isset($title)): ?>
+                    <h3>Search results for: <?= $title ?></h3>
+                <?php endif; ?>
                 <?php if(!empty($posts)) : ?>
                 <!-- Blog entries-->
-                <div class="col-lg-9">
+                
                     
-
+                    
                     <div class="row row-cols-1 row-cols-md-2 g-4">
                     <?php foreach($posts as $post) : ?>
                             <div class="col-lg-6">
@@ -39,10 +45,11 @@
                             <li class="page-item"><a class="page-link bg-dark" href="#!">Older</a></li>
                         </ul>
                     </nav>
-                </div>
+                
                 <?php else : ?>
                     <p class="text-muted">No posts available</p>
                 <?php endif; ?>
+                </div>
             </div>
         </div>
 

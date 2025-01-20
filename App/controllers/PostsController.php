@@ -423,5 +423,46 @@ class PostsController extends HomeController {
         redirect("/admin/posts/viewall");
     }
 
+    /**
+     * Delete a post
+     * 
+     * @param array $params
+     * @return void
+     */
+    public function destroy($params) {
+        $post_id = $params['id'] ?? '';
 
+        // Get the post
+        
+    }
+
+
+    /**
+     * Search Post by Title
+     * 
+     * @return void
+     */
+    public function search() {
+        $title = isset($_GET['title']) ? trim($_GET['title']) : '';
+
+        $query = "SELECT * FROM posts WHERE title LIKE :title ORDER BY created_at DESC";
+
+        $params = [
+            'title' => "%{$title}%"
+        ];
+
+        $posts = $this->db->query($query, $params)->fetchAll();
+
+        
+        // if(empty($posts)) {
+        //     inspect("No result found");
+        // }
+
+        loadView('posts/index', [
+            'title' => $title,
+            'posts' => $posts,
+            'categories' => $this->getCategory()
+        ]);
+        
+    }
 }
