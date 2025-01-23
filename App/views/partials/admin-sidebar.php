@@ -43,7 +43,14 @@
                     </ul>
                 </div>
             </li>
+            
 
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/admin/categories">
+                    <i class="align-middle" data-feather="sliders"></i>
+                    <span class="align-middle">Categories</span>
+                </a>
+            </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-profile.html">
                     <i class="align-middle" data-feather="user"></i>

@@ -20,3 +20,7 @@ $router->put('/admin/posts/{id}/edit', 'PostsController@update');
 
 // delete 
 $router->delete('/admin/posts/{id}', 'PostsController@destroy');
+
+// admin 
+$router->get('/admin/categories', 'AdminController@showCategory');
+$router->post('/admin/category/create', 'AdminController@createCategory');
